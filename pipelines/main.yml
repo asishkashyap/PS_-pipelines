@@ -7,6 +7,7 @@ pool: 'windows-latest'
 parameters:
   - name: environment
     type: string
+    displayName: 'Select Environment'
     values:
       - DEV
       - TEST 
