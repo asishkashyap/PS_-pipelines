@@ -30,6 +30,7 @@ stages:
        displayName: "Set Config in Container"
        steps:
        - task: AzureCli@2
+         displayName: 'Check Permission'
          inputs:
             azureSubscription: '$(SPN)'
             scriptType: pscore
