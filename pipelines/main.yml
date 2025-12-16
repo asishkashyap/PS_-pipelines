@@ -1,0 +1,45 @@
+name: Set-Config-${{ parameters.environment }}
+
+trigger: none
+
+pool: 'windows-latest'
+
+parameters:
+  - name: environment
+    type: string
+    value:
+      - DEV
+      - TEST 
+      - PROD  # this type of values provide a radio button like option on UI
+
+variables:
+# - name: storageAccountName
+#   value: 'to be decided'
+
+- name: SPN
+  value: 'azureportal'
+
+
+stages:
+ - stage: SetConfigStage
+   displayName: 'Setting Configuration in Storage'
+   jobs:
+     - job: setConfigJob
+       displayName: "Set Config in Container"
+       steps:
+       - task: PowerShell@2
+         inputs:
+            azureSubscription: '$(SPN)'
+            scriptType: pscore
+            scriptLocation: inclineScript
+            inclineScript: |
+              if ( ${{ parameters.environment }} -eq 'PROD') {
+                Write-Host "Onkly Leads can deploy apps in Clients like env"
+                Write-Error "You are not allowed to run this pipeline"
+                exit 1
+              }
+              else{
+                 Write-Host "Deployment is successful"
+              }
+     
+
