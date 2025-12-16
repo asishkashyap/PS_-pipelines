@@ -29,7 +29,7 @@ stages:
      - job: setConfigJob
        displayName: "Set Config in Container"
        steps:
-       - task: PowerShell@2
+       - task: AzureCli@2
          inputs:
             azureSubscription: '$(SPN)'
             scriptType: pscore
