@@ -7,7 +7,7 @@ pool: 'windows-latest'
 parameters:
   - name: environment
     type: string
-    value:
+    values:
       - DEV
       - TEST 
       - PROD  # this type of values provide a radio button like option on UI
@@ -31,8 +31,8 @@ stages:
          inputs:
             azureSubscription: '$(SPN)'
             scriptType: pscore
-            scriptLocation: inclineScript
-            inclineScript: |
+            scriptLocation: inlineScript
+            inlineScript: |
               if ( ${{ parameters.environment }} -eq 'PROD') {
                 Write-Host "Onkly Leads can deploy apps in Clients like env"
                 Write-Error "You are not allowed to run this pipeline"
